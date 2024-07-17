@@ -1,0 +1,27 @@
+[
+  {
+    "ID": 1,
+    "DESCRIPTION": "SCORRALES",
+    "PASSWORD": "12345"
+  },
+  {
+    "ID": 2,
+    "DESCRIPTION": "JSLONDONO",
+    "PASSWORD": "54321"
+  },
+  {
+    "ID": 3,
+    "DESCRIPTION": "MCALVAREZ",
+    "PASSWORD": "159753"
+  },
+  {
+    "ID": 4,
+    "DESCRIPTION": "TUSMA",
+    "PASSWORD": "357951"
+  },
+  {
+    "ID": 5,
+    "DESCRIPTION": "CGRISALES",
+    "PASSWORD": "987654"
+  }
+]
