@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("API-Capas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fd32b8f7261385190069fd215d297997e6a4884")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8a2d6e641f02202e59ead2d0a228126cd7c2237")]
 [assembly: System.Reflection.AssemblyProductAttribute("API-Capas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("API-Capas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

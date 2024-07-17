@@ -1,4 +1,5 @@
 using API_Capas.Validators;
+using Core.Automappers;
 using Core.Contracts;
 using Core.Implementation;
 using FluentValidation;
@@ -85,6 +86,9 @@ builder.Services.AddDbContext<StoreContext>((options) =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("storeConnection"), b => b.MigrationsAssembly("API-Capas"));
 });
+
+// Automappers
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // FluentValidator
 builder.Services.AddScoped<IValidator<BeerInsertDTO>, BeerInsertValidator>();

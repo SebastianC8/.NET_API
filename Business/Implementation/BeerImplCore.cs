@@ -1,4 +1,5 @@
-﻿using Core.Contracts;
+﻿using AutoMapper;
+using Core.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Repository.Contracts;
 using Repository.Data;
@@ -14,23 +15,18 @@ namespace Core.Implementation
     public class BeerImplCore : IBeerCore
     {
         private IBeerRepository _beerRepository;
+        private IMapper _mapper;
 
-        public BeerImplCore(StoreContext context, IBeerRepository beerRepository)
+        public BeerImplCore(IBeerRepository beerRepository, IMapper mapper)
         {
             _beerRepository = beerRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<BeerDTO>> Get()
         {
             var beers = await _beerRepository.Get();
-
-            return beers.Select(b => new BeerDTO
-            {
-                Id = b.BeerID,
-                Name = b.Name,
-                Alcohol = b.Alcohol,
-                BrandID = b.BrandID,
-            });
+            return beers.Select(b => _mapper.Map<BeerDTO>(b));
         }
 
         public async Task<BeerDTO> GetById(int id)
@@ -39,14 +35,7 @@ namespace Core.Implementation
 
             if (beer != null)
             {
-                BeerDTO beerDTO = new BeerDTO
-                {
-                    Id = beer.BrandID,
-                    Name = beer.Name,
-                    Alcohol = beer.Alcohol,
-                    BrandID = beer.BrandID
-                };
-
+                BeerDTO beerDTO = _mapper.Map<BeerDTO>(beer);
                 return beerDTO;
             }
 
@@ -56,23 +45,12 @@ namespace Core.Implementation
 
         public async Task<BeerDTO> Create(BeerInsertDTO beerInsertDTO)
         {
-            var beer = new Beer
-            {
-                Name = beerInsertDTO.Name,
-                Alcohol = beerInsertDTO.Alcohol,
-                BrandID = beerInsertDTO.BrandID
-            };
+            var beer = _mapper.Map<Beer>(beerInsertDTO); // Mapper 
 
             await _beerRepository.Create(beer);
             await _beerRepository.Save();
 
-            var beerDTO = new BeerDTO
-            {
-                Id = beer.BeerID,
-                Name = beer.Name,
-                Alcohol = beer.Alcohol,
-                BrandID = beer.BrandID
-            };
+            var beerDTO = _mapper.Map<BeerDTO>(beer);
 
             return beerDTO;
         }
@@ -83,21 +61,19 @@ namespace Core.Implementation
             
             if (beer != null)
             {
+
+                beer = _mapper.Map<BeerUpdateDTO, Beer>(beerUpdateDTO, beer);
+
+                /*
                 beer.Name = beerUpdateDTO.Name;
                 beer.Alcohol = beerUpdateDTO.Alcohol;
                 beer.BrandID = beerUpdateDTO.BrandID;
+                */
 
                 _beerRepository.Update(beer);
                 await _beerRepository.Save();
 
-                var beerDTO = new BeerDTO
-                {
-                    Id = beer.BeerID,
-                    Name = beer.Name,
-                    Alcohol = beer.Alcohol,
-                    BrandID = beer.BrandID
-                };
-
+                var beerDTO = _mapper.Map<BeerDTO>(beer);
                 return beerDTO;
             }
 
@@ -111,13 +87,7 @@ namespace Core.Implementation
 
             if (beer != null)
             {
-                var beerDTO = new BeerDTO
-                {
-                    Id = beer.BeerID,
-                    Name = beer.Name,
-                    Alcohol = beer.Alcohol,
-                    BrandID = beer.BrandID
-                };
+                var beerDTO = _mapper.Map<BeerDTO>(beer);
 
                 _beerRepository.Delete(beer);
                 await _beerRepository.Save();
