@@ -35,6 +35,9 @@
             "projectReferences": {
               "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\Business\\Core.csproj": {
                 "projectPath": "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\Business\\Core.csproj"
+              },
+              "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\DB\\Repository.csproj": {
+                "projectPath": "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\DB\\Repository.csproj"
               }
             }
           }

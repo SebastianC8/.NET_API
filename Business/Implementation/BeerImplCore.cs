@@ -1,5 +1,6 @@
 ﻿using Core.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Repository.Contracts;
 using Repository.Data;
 using Repository.Data.DTO;
 using System;
@@ -12,27 +13,29 @@ namespace Core.Implementation
 {
     public class BeerImplCore : IBeerCore
     {
-        private StoreContext _storeContext;
+        private IBeerRepository _beerRepository;
 
-        public BeerImplCore(StoreContext context)
+        public BeerImplCore(StoreContext context, IBeerRepository beerRepository)
         {
-            _storeContext = context;
+            _beerRepository = beerRepository;
         }
 
         public async Task<IEnumerable<BeerDTO>> Get()
         {
-            return await _storeContext.Beers.Select(b => new BeerDTO
+            var beers = await _beerRepository.Get();
+
+            return beers.Select(b => new BeerDTO
             {
                 Id = b.BeerID,
                 Name = b.Name,
                 Alcohol = b.Alcohol,
                 BrandID = b.BrandID,
-            }).ToListAsync();
+            });
         }
 
         public async Task<BeerDTO> GetById(int id)
         {
-            var beer = await _storeContext.Beers.FindAsync(id);
+            var beer = await _beerRepository.GetById(id);
 
             if (beer != null)
             {
@@ -60,8 +63,8 @@ namespace Core.Implementation
                 BrandID = beerInsertDTO.BrandID
             };
 
-            await _storeContext.Beers.AddAsync(beer);
-            await _storeContext.SaveChangesAsync();
+            await _beerRepository.Create(beer);
+            await _beerRepository.Save();
 
             var beerDTO = new BeerDTO
             {
@@ -76,7 +79,7 @@ namespace Core.Implementation
 
         public async Task<BeerDTO> Update(int id, BeerUpdateDTO beerUpdateDTO)
         {
-            var beer = await _storeContext.FindAsync<Beer>(id);
+            var beer = await _beerRepository.GetById(id);
             
             if (beer != null)
             {
@@ -84,7 +87,8 @@ namespace Core.Implementation
                 beer.Alcohol = beerUpdateDTO.Alcohol;
                 beer.BrandID = beerUpdateDTO.BrandID;
 
-                await _storeContext.SaveChangesAsync();
+                _beerRepository.Update(beer);
+                await _beerRepository.Save();
 
                 var beerDTO = new BeerDTO
                 {
@@ -103,7 +107,7 @@ namespace Core.Implementation
 
         public async Task<BeerDTO> Delete(int id)
         {
-            var beer = await _storeContext.FindAsync<Beer>(id);
+            var beer = await _beerRepository.GetById(id);
 
             if (beer != null)
             {
@@ -115,8 +119,8 @@ namespace Core.Implementation
                     BrandID = beer.BrandID
                 };
 
-                _storeContext.Remove(beer);
-                await _storeContext.SaveChangesAsync();
+                _beerRepository.Delete(beer);
+                await _beerRepository.Save();
 
                 return beerDTO;
             }

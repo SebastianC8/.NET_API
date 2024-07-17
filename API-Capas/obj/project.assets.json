@@ -4275,6 +4275,7 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.6",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.6",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.6",
+      "Repository >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -4313,6 +4314,9 @@
           "projectReferences": {
             "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\Business\\Core.csproj": {
               "projectPath": "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\Business\\Core.csproj"
+            },
+            "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\DB\\Repository.csproj": {
+              "projectPath": "C:\\Users\\SEBASTIAN\\source\\repos\\Capacitacion\\DB\\Repository.csproj"
             }
           }
         }

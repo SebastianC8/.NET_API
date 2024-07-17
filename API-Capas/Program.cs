@@ -48,11 +48,14 @@ builder.Services.AddCors(c =>
     })
 );
 
-// Dependency inject
+// Dependency inject - Core
 builder.Services.AddScoped<IPeopleRepository, PeopleImplRepository>();
 builder.Services.AddScoped<IPeopleCore, PeopleImplCore>();
 builder.Services.AddScoped<IPostCore, PostImplCore>();
 builder.Services.AddScoped<IBeerCore, BeerImplCore>();
+
+// Dependency inject - Repository
+builder.Services.AddScoped<IBeerRepository, BeerImplRepository>();
 
 // This config always must be below the dependency inject of the same service. - HTTPClient
 builder.Services.AddHttpClient<IPostCore, PostImplCore>(c =>
